@@ -1,102 +1,63 @@
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+defineOptions({
+  name: 'MainLayout'
+})
+</script>
+
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+    <q-footer elevated>
+      <q-toolbar class="bg-primary text-white justify-around q-pb-sm">
         <q-btn
           flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
+          icon="o_home"
+          color="secondary"
+          size="md"
+          @click="router.push('/')"
         />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
+        <q-btn
+          flat
+          icon="o_dashboard"
+          color="secondary"
+          size="md"
+          @click="router.push('/board')"
+        />
+        <div
+          class="bg-secondary q-ma-sm flex flex-center"
+          style="border-radius: 14px; width: 36px; height: 36px"
         >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
+          <q-btn
+            class="q-pa-none q-ma-none"
+            flat
+            icon="o_add"
+            color="primary"
+            size="md"
+            @click="router.push('/add')"
+          />
+        </div>
+        <q-btn
+          flat
+          icon="o_message"
+          color="secondary"
+          size="md"
+          @click="router.push('/inbox')"
         />
-      </q-list>
-    </q-drawer>
+        <q-btn
+          flat
+          icon="o_person"
+          color="secondary"
+          size="md"
+          @click="router.push('/profile')"
+        />
+      </q-toolbar>
+    </q-footer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
-</script>

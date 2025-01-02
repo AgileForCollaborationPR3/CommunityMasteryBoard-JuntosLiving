@@ -1,0 +1,74 @@
+[
+  {
+    "gratitudeId": "1",
+    "userId": "user_001",
+    "entryId": "7", // Refers to a mastery item
+    "intervalStart": "2024-12-27T00:00:00.000Z",
+    "intervalEnd": "2024-12-27T23:59:59.999Z",
+    "createdAt": "2024-12-27T10:00:00.287Z"
+  },
+  {
+    "gratitudeId": "2",
+    "userId": "user_002",
+    "entryId": "8",
+    "intervalStart": "2024-12-27T00:00:00.000Z",
+    "intervalEnd": "2024-12-27T23:59:59.999Z",
+    "createdAt": "2024-12-27T11:30:00.287Z"
+  },
+  {
+    "gratitudeId": "3",
+    "userId": "user_003",
+    "entryId": "7",
+    "intervalStart": "2024-12-27T00:00:00.000Z",
+    "intervalEnd": "2024-12-27T23:59:59.999Z",
+    "createdAt": "2024-12-27T12:15:00.287Z"
+  },
+  {
+    "gratitudeId": "4",
+    "userId": "user_004",
+    "entryId": "8",
+    "intervalStart": "2024-12-26T00:00:00.000Z",
+    "intervalEnd": "2024-12-26T23:59:59.999Z",
+    "createdAt": "2024-12-26T14:00:00.287Z"
+  },
+  {
+    "gratitudeId": "5",
+    "userId": "user_005",
+    "entryId": "7",
+    "intervalStart": "2024-12-26T00:00:00.000Z",
+    "intervalEnd": "2024-12-26T23:59:59.999Z",
+    "createdAt": "2024-12-26T15:20:00.287Z"
+  },
+  {
+    "gratitudeId": "6",
+    "userId": "user_006",
+    "entryId": "8",
+    "intervalStart": "2024-12-27T00:00:00.000Z",
+    "intervalEnd": "2024-12-27T23:59:59.999Z",
+    "createdAt": "2024-12-27T16:45:00.287Z"
+  },
+  {
+    "gratitudeId": "7",
+    "userId": "user_007",
+    "entryId": "7",
+    "intervalStart": "2024-12-27T00:00:00.000Z",
+    "intervalEnd": "2024-12-27T23:59:59.999Z",
+    "createdAt": "2024-12-27T17:50:00.287Z"
+  },
+  {
+    "gratitudeId": "8",
+    "userId": "user_008",
+    "entryId": "7",
+    "intervalStart": "2024-12-26T00:00:00.000Z",
+    "intervalEnd": "2024-12-26T23:59:59.999Z",
+    "createdAt": "2024-12-26T18:30:00.287Z"
+  },
+  {
+    "gratitudeId": "9",
+    "userId": "user_009",
+    "entryId": "8",
+    "intervalStart": "2024-12-27T00:00:00.000Z",
+    "intervalEnd": "2024-12-27T23:59:59.999Z",
+    "createdAt": "2024-12-27T19:00:00.287Z"
+  }
+]

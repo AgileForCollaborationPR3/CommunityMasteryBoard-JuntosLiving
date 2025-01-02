@@ -1,0 +1,16 @@
+[
+  {
+    "settingId": "1",
+    "checkInInterval": "daily",
+    "checkInWindow": { "start": "12:00", "end": "00:00" },
+    "gratitudeInterval": "daily",
+    "changeUpMeetingSchedule": "2024-12-30T10:00:00.000Z"
+  },
+  {
+    "settingId": "2",
+    "checkInInterval": "weekly",
+    "checkInWindow": { "start": "08:00", "end": "18:00" },
+    "gratitudeInterval": "weekly",
+    "changeUpMeetingSchedule": "2025-01-05T14:00:00.000Z"
+  }
+]

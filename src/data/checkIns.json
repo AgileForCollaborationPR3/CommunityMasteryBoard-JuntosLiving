@@ -1,0 +1,74 @@
+[
+  {
+    "checkInId": "1",
+    "userId": "user_001",
+    "entryId": "5",
+    "checkInDate": "2024-12-27",
+    "status": "confirmed",
+    "score": 1
+  },
+  {
+    "checkInId": "2",
+    "userId": "user_002",
+    "entryId": "5",
+    "checkInDate": "2024-12-27",
+    "status": "missed",
+    "score": 0
+  },
+  {
+    "checkInId": "3",
+    "userId": "user_003",
+    "entryId": "6",
+    "checkInDate": "2024-12-26",
+    "status": "confirmed",
+    "score": 1
+  },
+  {
+    "checkInId": "4",
+    "userId": "user_004",
+    "entryId": "6",
+    "checkInDate": "2024-12-27",
+    "status": "confirmed",
+    "score": 1
+  },
+  {
+    "checkInId": "5",
+    "userId": "user_005",
+    "entryId": "5",
+    "checkInDate": "2024-12-26",
+    "status": "missed",
+    "score": 0
+  },
+  {
+    "checkInId": "6",
+    "userId": "user_006",
+    "entryId": "5",
+    "checkInDate": "2024-12-27",
+    "status": "confirmed",
+    "score": 1
+  },
+  {
+    "checkInId": "7",
+    "userId": "user_007",
+    "entryId": "6",
+    "checkInDate": "2024-12-26",
+    "status": "confirmed",
+    "score": 1
+  },
+  {
+    "checkInId": "8",
+    "userId": "user_008",
+    "entryId": "6",
+    "checkInDate": "2024-12-27",
+    "status": "missed",
+    "score": 0
+  },
+  {
+    "checkInId": "9",
+    "userId": "user_009",
+    "entryId": "5",
+    "checkInDate": "2024-12-27",
+    "status": "confirmed",
+    "score": 0
+  }
+]

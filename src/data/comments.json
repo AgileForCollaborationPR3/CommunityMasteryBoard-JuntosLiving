@@ -1,0 +1,202 @@
+[
+  {
+    "commentId": "1",
+    "entryId": "1",
+    "parentCommentId": null,
+    "userId": "1",
+    "username": "john_doe",
+    "comment": "This is the first top-level comment on entry 1.",
+    "createdAt": "2024-12-27T14:00:00Z",
+    "updatedAt": "2024-12-27T14:00:00Z"
+  },
+  {
+    "commentId": "2",
+    "entryId": "1",
+    "parentCommentId": "1",
+    "userId": "2",
+    "username": "jane_smith",
+    "comment": "This is a reply to the first comment on entry 1.",
+    "createdAt": "2024-12-27T14:05:00Z",
+    "updatedAt": "2024-12-27T14:05:00Z"
+  },
+  {
+    "commentId": "3",
+    "entryId": "1",
+    "parentCommentId": "1",
+    "userId": "3",
+    "username": "alice_johnson",
+    "comment": "Another reply to the first comment on entry 1.",
+    "createdAt": "2024-12-27T14:10:00Z",
+    "updatedAt": "2024-12-27T14:10:00Z"
+  },
+  {
+    "commentId": "4",
+    "entryId": "1",
+    "parentCommentId": "3",
+    "userId": "4",
+    "username": "bob_williams",
+    "comment": "A reply to Alice's comment on entry 1.",
+    "createdAt": "2024-12-27T14:15:00Z",
+    "updatedAt": "2024-12-27T14:15:00Z"
+  },
+  {
+    "commentId": "5",
+    "entryId": "1",
+    "parentCommentId": null,
+    "userId": "5",
+    "username": "charlie_brown",
+    "comment": "This is another top-level comment on entry 1.",
+    "createdAt": "2024-12-27T14:20:00Z",
+    "updatedAt": "2024-12-27T14:20:00Z"
+  },
+  {
+    "commentId": "6",
+    "entryId": "2",
+    "parentCommentId": null,
+    "userId": "6",
+    "username": "eve_davis",
+    "comment": "This is a top-level comment on entry 2.",
+    "createdAt": "2024-12-27T14:25:00Z",
+    "updatedAt": "2024-12-27T14:25:00Z"
+  },
+  {
+    "commentId": "7",
+    "entryId": "2",
+    "parentCommentId": "6",
+    "userId": "7",
+    "username": "frank_miller",
+    "comment": "This is a reply to Eve's comment on entry 2.",
+    "createdAt": "2024-12-27T14:30:00Z",
+    "updatedAt": "2024-12-27T14:30:00Z"
+  },
+  {
+    "commentId": "8",
+    "entryId": "2",
+    "parentCommentId": "7",
+    "userId": "8",
+    "username": "grace_harris",
+    "comment": "A reply to Frank's reply on entry 2.",
+    "createdAt": "2024-12-27T14:35:00Z",
+    "updatedAt": "2024-12-27T14:35:00Z"
+  },
+  {
+    "commentId": "9",
+    "entryId": "2",
+    "parentCommentId": null,
+    "userId": "9",
+    "username": "henry_moore",
+    "comment": "Another top-level comment on entry 2.",
+    "createdAt": "2024-12-27T14:40:00Z",
+    "updatedAt": "2024-12-27T14:40:00Z"
+  },
+  {
+    "commentId": "10",
+    "entryId": "3",
+    "parentCommentId": null,
+    "userId": "10",
+    "username": "ivy_taylor",
+    "comment": "This is the first top-level comment on entry 3.",
+    "createdAt": "2024-12-27T14:45:00Z",
+    "updatedAt": "2024-12-27T14:45:00Z"
+  },
+  {
+    "commentId": "11",
+    "entryId": "3",
+    "parentCommentId": "10",
+    "userId": "1",
+    "username": "john_doe",
+    "comment": "A reply to Ivy's comment on entry 3.",
+    "createdAt": "2024-12-27T14:50:00Z",
+    "updatedAt": "2024-12-27T14:50:00Z"
+  },
+  {
+    "commentId": "12",
+    "entryId": "3",
+    "parentCommentId": null,
+    "userId": "2",
+    "username": "jane_smith",
+    "comment": "This is another top-level comment on entry 3.",
+    "createdAt": "2024-12-27T14:55:00Z",
+    "updatedAt": "2024-12-27T14:55:00Z"
+  },
+  {
+    "commentId": "13",
+    "entryId": "3",
+    "parentCommentId": "12",
+    "userId": "3",
+    "username": "alice_johnson",
+    "comment": "A reply to Jane's comment on entry 3.",
+    "createdAt": "2024-12-27T15:00:00Z",
+    "updatedAt": "2024-12-27T15:00:00Z"
+  },
+  {
+    "commentId": "14",
+    "entryId": "3",
+    "parentCommentId": "13",
+    "userId": "4",
+    "username": "bob_williams",
+    "comment": "A reply to Alice's reply on entry 3.",
+    "createdAt": "2024-12-27T15:05:00Z",
+    "updatedAt": "2024-12-27T15:05:00Z"
+  },
+  {
+    "commentId": "15",
+    "entryId": "4",
+    "parentCommentId": null,
+    "userId": "5",
+    "username": "charlie_brown",
+    "comment": "Top-level comment on entry 4.",
+    "createdAt": "2024-12-27T15:10:00Z",
+    "updatedAt": "2024-12-27T15:10:00Z"
+  },
+  {
+    "commentId": "16",
+    "entryId": "4",
+    "parentCommentId": "15",
+    "userId": "6",
+    "username": "eve_davis",
+    "comment": "A reply to Charlie's comment on entry 4.",
+    "createdAt": "2024-12-27T15:15:00Z",
+    "updatedAt": "2024-12-27T15:15:00Z"
+  },
+  {
+    "commentId": "17",
+    "entryId": "4",
+    "parentCommentId": null,
+    "userId": "7",
+    "username": "frank_miller",
+    "comment": "Another top-level comment on entry 4.",
+    "createdAt": "2024-12-27T15:20:00Z",
+    "updatedAt": "2024-12-27T15:20:00Z"
+  },
+  {
+    "commentId": "18",
+    "entryId": "4",
+    "parentCommentId": "17",
+    "userId": "8",
+    "username": "grace_harris",
+    "comment": "A reply to Frank's comment on entry 4.",
+    "createdAt": "2024-12-27T15:25:00Z",
+    "updatedAt": "2024-12-27T15:25:00Z"
+  },
+  {
+    "commentId": "19",
+    "entryId": "5",
+    "parentCommentId": null,
+    "userId": "9",
+    "username": "henry_moore",
+    "comment": "Top-level comment on entry 5.",
+    "createdAt": "2024-12-27T15:30:00Z",
+    "updatedAt": "2024-12-27T15:30:00Z"
+  },
+  {
+    "commentId": "20",
+    "entryId": "5",
+    "parentCommentId": "19",
+    "userId": "10",
+    "username": "ivy_taylor",
+    "comment": "A reply to Henry's comment on entry 5.",
+    "createdAt": "2024-12-27T15:35:00Z",
+    "updatedAt": "2024-12-27T15:35:00Z"
+  }
+]

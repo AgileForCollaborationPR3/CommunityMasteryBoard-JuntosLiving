@@ -1,0 +1,58 @@
+[
+  {
+    "voteId": "1",
+    "userId": "user_001",
+    "entryId": "1",
+    "voteType": "objection",
+    "createdAt": "2024-12-27T12:00:00.287Z"
+  },
+  {
+    "voteId": "2",
+    "userId": "user_002",
+    "entryId": "2",
+    "voteType": "concern",
+    "createdAt": "2024-12-27T12:30:00.287Z"
+  },
+  {
+    "voteId": "3",
+    "userId": "user_003",
+    "entryId": "3",
+    "voteType": "no objection",
+    "createdAt": "2024-12-27T13:00:00.287Z"
+  },
+  {
+    "voteId": "4",
+    "userId": "user_004",
+    "entryId": "4",
+    "voteType": "no objection",
+    "createdAt": "2024-12-27T13:30:00.287Z"
+  },
+  {
+    "voteId": "5",
+    "userId": "user_005",
+    "entryId": "5",
+    "voteType": "concern",
+    "createdAt": "2024-12-27T14:00:00.287Z"
+  },
+  {
+    "voteId": "6",
+    "userId": "user_006",
+    "entryId": "6",
+    "voteType": "objection",
+    "createdAt": "2024-12-27T14:30:00.287Z"
+  },
+  {
+    "voteId": "7",
+    "userId": "user_007",
+    "entryId": "1",
+    "voteType": "no objection",
+    "createdAt": "2024-12-27T15:00:00.287Z"
+  },
+  {
+    "voteId": "8",
+    "userId": "user_008",
+    "entryId": "2",
+    "voteType": "objection",
+    "createdAt": "2024-12-27T15:30:00.287Z"
+  }
+]

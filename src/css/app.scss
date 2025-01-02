@@ -1,1 +1,75 @@
 // app global css in SCSS form
+.bg-lpage {
+  background-color: #FAF3EA;
+}
+.text-lpage {
+  color: #FAF3EA;
+}
+.text-lpage-80 {
+  color: #FAF3EA;
+  opacity: 80%;
+}
+.bg-dpage {
+  background-color: #0C3521;
+}
+.text-dpage {
+  color: #0C3521;
+}
+.bg-aware {
+  background-color: #02B35F;
+}
+.text-aware {
+ color: #02B35F;
+}
+.bg-implement {
+  background-color: #FFC42E;
+}
+.text-implement {
+ color: #FFC42E;
+}
+.bg-practice {
+  background-color: #FF76A7;
+}
+.text-practice {
+ color: #FF76A7;
+}
+.bg-mastery {
+  background-color: #F96C01;
+}
+.text-mastery {
+ color: #F96C01;
+}
+.bg-primary-80 {
+  background-color: #0E3C26;
+  opacity: 80%;
+}
+.text-primary-80 {
+  color: #0E3C26;
+  opacity: 80%;
+}
+
+.text-weight-semibold {
+  font-weight:600;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+div, p, span, .text-body1, .text-body2, .text-subtitle1, .text-subtitle2, .text-caption {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.nunito {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.lora {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
