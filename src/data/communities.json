@@ -1,0 +1,20 @@
+[
+    {
+        "communityId": "101",
+        "communityName": "rhizoklas24",
+        "juntosLivingCommunityId": "rhizoklas24-jd4c",
+        "createdBy": "1",
+        "members": [
+          {
+            "userId": "1",
+            "role": "leader"
+          },
+          {
+            "userId": "2",
+            "role": "member"
+          }
+        ],
+        "createdAt": "2024-12-27T10:00:00Z",
+        "updatedAt": "2024-12-27T10:30:00Z"
+      }
+]

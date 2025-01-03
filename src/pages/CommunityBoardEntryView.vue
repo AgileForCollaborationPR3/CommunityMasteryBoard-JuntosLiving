@@ -5,10 +5,6 @@ import { useEntriesStore } from '../stores/EntriesStore'
 import { useUsersStore } from '../stores/UsersStore'
 import { useCommentsStore } from '../stores/CommentsStore'
 import UserProfileAvatarMini from '../components/commons/UserProfileAvatarMini.vue'
-import StageIconMini from '../components/commons/StageIconMini.vue'
-import { useTimeout } from 'quasar'
-
-const { registerTimeout } = useTimeout()
 
 const route = useRoute()
 const entriesStore = useEntriesStore()

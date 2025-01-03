@@ -7,6 +7,8 @@ defineOptions({
 
 const leaderToggle = ref(true)
 
+const text = ref("")
+
 const habits = ref([
   {
     name: 'Follow the Recycling Rules',

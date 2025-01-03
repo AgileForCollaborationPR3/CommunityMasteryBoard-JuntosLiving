@@ -6,7 +6,7 @@ const routes = [
       { path: "", component: () => import("pages/IndexPage.vue") },
       { path: "board", component: () => import("pages/CommunityBoard.vue") },
       { path: "inbox", component: () => import("pages/ChatMessages.vue") },
-      { path: "profile", component: () => import("pages/UserProfile.vue") },
+      { path: "profile", component: () => import("pages/ProfilePage.vue") },
       {
         path: "entries/:id",
         name: "single-entry",
@@ -20,12 +20,17 @@ const routes = [
       {
         path: "register",
         name: "register",
-        component: () => import("src/pages/register.vue"),
+        component: () => import("src/pages/AuthRegisterPage.vue"),
       },
       {
         path: "login",
         name: "login",
-        component: () => import("src/pages/login.vue"),
+        component: () => import("src/pages/AuthLoginPage.vue"),
+      },
+      {
+        path: "community",
+        name: "community",
+        component: () => import("src/pages/AuthRegisterCommunityPage.vue"),
       },
     ],
   },

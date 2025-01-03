@@ -62,12 +62,13 @@ const filteredAwarenesses = computed(() =>
 // Sort selected awarenesses to appear at the top
 const sortedAwarenesses = computed(() => {
   const selected = formData.value.selectedAwareness;
-  console.log("selected: " + formData.value.selectedAwareness);
-  return filteredAwarenesses.value.sort((a, b) => {
+  return [...filteredAwarenesses.value].sort((a, b) => {
     if (selected.includes(a.entryId) && !selected.includes(b.entryId)) {
       return -1;
     }
-    if (!selected.includes(a.entryId) && selected.includes(b.entryId)) return 1;
+    if (!selected.includes(a.entryId) && selected.includes(b.entryId)) {
+      return 1;
+    }
     return 0;
   });
 });
@@ -412,7 +413,7 @@ const submitEntry = () => {
             >
               <div class="custom-chip-container">
                 <div
-                  v-for="(awareness, index) in sortedAwarenesses"
+                  v-for="(awareness) in sortedAwarenesses"
                   :key="awareness.entryId"
                   v-ripple:teal-10
                   :class="[
@@ -466,7 +467,7 @@ const submitEntry = () => {
             >
               <div class="custom-chip-container">
                 <div
-                  v-for="(proposal, index) in filteredProposals"
+                  v-for="(proposal) in filteredProposals"
                   :key="proposal.entryId"
                   v-ripple:teal-10
                   :class="[
@@ -522,7 +523,7 @@ const submitEntry = () => {
             >
               <div class="custom-chip-container">
                 <div
-                  v-for="(practice, index) in filteredPractices"
+                  v-for="(practice) in filteredPractices"
                   :key="practice.entryId"
                   v-ripple:teal-10
                   :class="[

@@ -7,8 +7,9 @@
     "username": "john_doe",
     "passwordHash": "hashed_password_1",
     "avatarUrl": "https://example.com/avatar1.png",
-    "role": "member",
-    "communityId": "101",
+    "role": "member", // Role for the current community
+    "communityIds": ["101", "102"], // List of communities user belongs to
+    "currentCommunityId": "101", // Community the user is currently logged into
     "isVerified": true,
     "lastLogin": "2024-12-26T10:15:00Z",
     "createdAt": "2023-01-01T00:00:00Z",
