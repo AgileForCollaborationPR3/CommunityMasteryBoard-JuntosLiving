@@ -32,6 +32,11 @@ const routes = [
         name: "community",
         component: () => import("src/pages/AuthRegisterCommunityPage.vue"),
       },
+      {
+        path: "/dummy",
+        name: "dummy",
+        component: () => import("../pages/dummyEntries.vue"),
+      },
     ],
   },
 

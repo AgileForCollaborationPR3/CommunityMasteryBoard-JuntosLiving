@@ -41,7 +41,10 @@ export default route(function (/* { store, ssrContext } */) {
     await authStore.getSession();
 
     // Redirect unauthenticated users to /login
-    if (!authStore.user && !["/login", "/register"].includes(to.path)) {
+    if (
+      !authStore.user &&
+      !["/login", "/register", "/dummy"].includes(to.path)
+    ) {
       return { path: "/login" };
     }
 

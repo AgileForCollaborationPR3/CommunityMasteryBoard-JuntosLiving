@@ -1,42 +1,49 @@
-import { defineStore } from 'pinia'
-import { useCommentsStore } from './CommentsStore'
-import dataEntries from '../data/entries.json'
+import { defineStore } from "pinia";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../boot/firebase";
+import { useAuthCommunityStore } from "./auth-community-store";
 
-export const useEntriesStore = defineStore('entries', {
+export const useEntriesStore = defineStore("entries", {
   state: () => ({
-    entries: dataEntries
+    entries: [], // All entries for the current community
   }),
   getters: {
-    // Combine entries and comments, sorted by createdAt
     combinedLatestItems: (state) => {
-      const commentsStore = useCommentsStore()
-
-      // Add `contentCategory` to distinguish between entries and comments
-      const entriesWithCategory = state.entries.map((entry) => ({
-        ...entry,
-        contentCategory: 'entry'
-      }))
-
-      const commentsWithCategory = commentsStore.comments.map((comment) => {
-        const associatedEntry = state.entries.find(
-          (entry) => entry.entryId === comment.entryId
-        )
-
-        return {
-          ...comment,
-          contentCategory: 'comment',
-          stageId: associatedEntry ? associatedEntry.stageId : null
-        }
-      })
-
-      // Combine entries and comments
-      const combinedItems = [...entriesWithCategory, ...commentsWithCategory]
-
-      // Sort combined items by createdAt (descending) and get the last 10
-      return combinedItems
+      // Combine entries for display in "New" filter
+      return [...state.entries]
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 15)
-    }
+        .slice(0, 15);
+    },
   },
-  actions: {}
-})
+  actions: {
+    async fetchEntries(communityId) {
+      try {
+        const authCommunityStore = useAuthCommunityStore();
+        const role = authCommunityStore.profile.role;
+
+        // Query for entries belonging to the current community
+        const q = query(
+          collection(db, "entries"),
+          where("communityId", "==", communityId)
+        );
+        const querySnapshot = await getDocs(q);
+
+        this.entries = querySnapshot.docs
+          .map((doc) => ({
+            entryId: doc.id,
+            ...doc.data(),
+          }))
+          .filter((entry) => {
+            // Show all public entries and private entries if the user is the leader
+            return (
+              entry.visibility === "public" ||
+              (entry.visibility === "private" && role === "leader")
+            );
+          });
+      } catch (error) {
+        console.error("Error fetching entries:", error.message);
+        throw new Error("Failed to load community entries.");
+      }
+    },
+  },
+});

@@ -5,6 +5,7 @@
     "contentType": "text",
     "intent": "challenge",
     "observation": "Observed delays in task completion.",
+    "observationPrivate": false,
     "needs": ["Better time management", "Clearer deadlines"],
     "selectedAwarenesses": [],
     "proposal": null,
