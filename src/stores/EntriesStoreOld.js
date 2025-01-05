@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useCommentsStore } from "./CommentsStore";
+import { useCommentsStore } from "./comments-store";
 import dataEntries from "../data/entries.json";
 
 export const useEntriesStoreOld = defineStore("entriesOld", {

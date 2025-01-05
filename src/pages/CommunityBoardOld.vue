@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import CommunityBoardCardEntry from 'src/components/CommunityBoardCardEntry.vue'
-import { useEntriesStore } from '../stores/EntriesStore'
-import { useUsersStore } from '../stores/UsersStore'
+import { useEntriesStore } from '../stores/entries-store'
+import { useUsersStore } from '../stores/users-store'
 import { useRouter } from 'vue-router'
 const entriesStore = useEntriesStore()
 const usersStore = useUsersStore()
@@ -74,95 +74,41 @@ const splitCards = computed(() => {
 
 <template>
   <q-page class="bg-lpage q-px-sm">
-    <q-page-sticky
-      position="top-left"
-      :offset="[0, 0]"
-      style="z-index: 3"
-      class="bg-lpage"
-    >
-      <q-toolbar
-        class="text-primary"
-        style="border-radius: 20px"
-      >
+    <q-page-sticky position="top-left" :offset="[0, 0]" style="z-index: 3" class="bg-lpage">
+      <q-toolbar class="text-primary" style="border-radius: 20px">
         <q-toolbar-title class="lora text-h6 text-weight-bold">
           Community Board
         </q-toolbar-title>
-        <q-btn
-          filled
-          round
-          color="primary"
-          text-color="accent"
-          dense
-          icon="o_list"
-        />
+        <q-btn filled round color="primary" text-color="accent" dense icon="o_list" />
       </q-toolbar>
 
-      <div
-        class="q-px-lg"
-        :style="{ width: $q.screen.width, height: '32px' }"
-      >
-        <q-scroll-area
-          :thumb-style="thumbStyle"
-          :bar-style="barStyle"
-          :style="{ width: $q.screen.width - 48 + 'px', height: '32px' }"
-        >
+      <div class="q-px-lg" :style="{ width: $q.screen.width, height: '32px' }">
+        <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle"
+          :style="{ width: $q.screen.width - 48 + 'px', height: '32px' }">
           <div class="row no-wrap">
-            <q-btn
-              v-for="filter in filters"
-              :key="filter"
-              size="small"
-              dense
-              no-caps
-              flat
-              :label="filter"
-              :color="activeFilter === filter ? 'primary' : 'grey'"
-              class="q-mr-sm"
-              @click="activeFilter = filter"
-            />
+            <q-btn v-for="filter in filters" :key="filter" size="small" dense no-caps flat :label="filter"
+              :color="activeFilter === filter ? 'primary' : 'grey'" class="q-mr-sm" @click="activeFilter = filter" />
           </div>
         </q-scroll-area>
       </div>
     </q-page-sticky>
 
-    <div
-      class="masonry-grid bg-lpage q-mt-xs"
-      :style="{ paddingTop: '82px' }"
-    >
-      <div
-        v-for="(columnItems, columnIndex) in splitCards"
-        :key="columnIndex"
-        class="column"
-      >
-        <div
-          v-for="item in columnItems"
-          :key="item.id"
-          class="masonry-item"
-          @click="
-            router.push({
-              name: 'single-entry',
-              params: { id: item.entryId },
-            })
-          "
-        >
-          <CommunityBoardCardEntry
-            :item-id="item.entryId || item.commentId"
-            :first-name="item.firstName"
-            :last-name="item.lastName"
-            :stage-id="item.stageId || ''"
-            :content-type="item.contentType || 'text'"
-            :content-category="item.contentCategory || 'entry'"
-            :comment="item.comment || ''"
-            :intent="item.intent || null"
-            :observation="item.observation || null"
-            :needs="item.needs || []"
-            :selected-awarenesses="item.selectedAwarenesses || []"
-            :proposal="item.proposal || null"
-            :selected-implementations="item.selectedImplementations || []"
-            :practice="item.practice || null"
-            :selected-practice="item.selectedPractice || []"
-            :mastered="item.mastered || null"
-            :status="item.status || 'visible'"
-          />
+    <div class="masonry-grid bg-lpage q-mt-xs" :style="{ paddingTop: '82px' }">
+      <div v-for="(columnItems, columnIndex) in splitCards" :key="columnIndex" class="column">
+        <div v-for="item in columnItems" :key="item.id" class="masonry-item" @click="
+          router.push({
+            name: 'single-entry',
+            params: { id: item.entryId },
+          })
+          ">
+          <CommunityBoardCardEntry :item-id="item.entryId || item.commentId" :first-name="item.firstName"
+            :last-name="item.lastName" :stage-id="item.stageId || ''" :content-type="item.contentType || 'text'"
+            :content-category="item.contentCategory || 'entry'" :comment="item.comment || ''"
+            :intent="item.intent || null" :observation="item.observation || null" :needs="item.needs || []"
+            :selected-awarenesses="item.selectedAwarenesses || []" :proposal="item.proposal || null"
+            :selected-implementations="item.selectedImplementations || []" :practice="item.practice || null"
+            :selected-practice="item.selectedPractice || []" :mastered="item.mastered || null"
+            :status="item.status || 'visible'" />
         </div>
       </div>
     </div>
@@ -187,7 +133,7 @@ const splitCards = computed(() => {
   box-sizing: border-box;
 }
 
-.masonry-item > .q-card {
+.masonry-item>.q-card {
   width: 100%;
 }
 </style>

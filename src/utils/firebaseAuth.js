@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { db } from "../boot/firebase";
 
@@ -24,7 +25,7 @@ export const register = async (formData) => {
     });
 
     // Create initial profile in Firestore
-    await setDoc(doc(db, "profiles", user.uid), {
+    const profileData = {
       userId: user.uid,
       username: formData.username,
       fullName: `${formData.firstName} ${formData.lastName}`,
@@ -34,12 +35,26 @@ export const register = async (formData) => {
       isVerified: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    });
+    };
+
+    // Save to `profiles` collection
+    await setDoc(doc(db, "profiles", user.uid), profileData);
+
+    // Save public profile to `publicProfiles` collection
+    const publicProfileData = {
+      userId: user.uid,
+      username: formData.username,
+      fullName: `${formData.firstName} ${formData.lastName}`,
+      role: "member", // Public role
+      createdAt: new Date().toISOString(),
+    };
+
+    await setDoc(doc(db, "publicProfiles", user.uid), publicProfileData);
 
     return user;
   } catch (error) {
     console.error("Registration error:", error.message);
-    throw new Error("Unable to register. Please try again.");
+    throw new Error(error.message || "Unable to register. Please try again.");
   }
 };
 
@@ -51,6 +66,15 @@ export const login = async (formData) => {
     const errorMessage = mapFirebaseErrorToMessage(error.code);
     console.error("Login error:", error.message);
     throw new Error(errorMessage);
+  }
+};
+
+export const logout = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Logout error:", error.message);
+    throw new Error("Unable to logout. Please try again.");
   }
 };
 

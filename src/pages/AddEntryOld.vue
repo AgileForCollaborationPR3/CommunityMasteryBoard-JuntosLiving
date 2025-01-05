@@ -1,30 +1,26 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useEntriesStore } from "../stores/entries-store";
 import { useQuasar } from "quasar";
-import StageBadge from "../components/commons/StageBadge.vue";
-import { useAuthCommunityStore } from "../stores/auth-community-store";
+import StageIconMini from "../components/commons/StageIconMini.vue";
 
 const $q = useQuasar();
 const router = useRouter();
 const entriesStore = useEntriesStore();
-const authStore = useAuthCommunityStore();
-
 
 // Tab State
 const tab = ref("type");
 const entryType = ref(null);
-const inputValue = ref(""); // For "needs" chip input
+const inputValue = ref(""); // Temporary input value
 const formData = ref({
   intent: null,
   observation: "",
-  observationPrivate: false,
   needs: [],
-  proposal: "",
   practice: "",
+  proposal: "",
   mastered: "",
-  selectedAwarenesses: [],
+  selectedAwareness: [],
   selectedProposals: [],
   selectedPractices: [],
 });
@@ -33,14 +29,6 @@ const formData = ref({
 const close = () => {
   router.push("/board");
 };
-
-// Determine available stages based on role
-const availableStages = computed(() => {
-  const role = authStore.profile?.role || "member"; // Default to "member"
-  return role === "leader"
-    ? ["awareness", "implementing", "practicing", "mastery"]
-    : ["awareness", "implementing"];
-});
 
 // Awareness - Add a chip to the list
 const addChip = () => {
@@ -56,226 +44,14 @@ const removeChip = (index) => {
   formData.value.needs.splice(index, 1);
 };
 
-
-const submitEntry = async () => {
-  try {
-    const userId = authStore.user?.uid;
-    const communityId = authStore.profile?.currentCommunityId;
-    if (!userId) throw new Error("User not authenticated.");
-    if (!communityId) throw new Error("Community not selected.");
-
-    // Prepare the entry data
-    let entryData = {
-      userId,
-      communityId,
-      stageId: entryType.value,
-      status: "visible",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    // Add stage-specific fields
-    switch (entryType.value) {
-      case "awareness": {
-        entryData = {
-          ...entryData,
-          observation: formData.value.observation || "",
-          observationPrivate: formData.value.observationPrivate || false,
-          needs: formData.value.needs || [],
-          intent: formData.value.intent?.value || "",
-          proposal: "",
-          practice: "",
-          mastered: "",
-          selectedAwarenesses: [],
-          selectedImplementations: [],
-          selectedPractices: [],
-          checkInSettings: {
-            interval: 1,
-            startCheckInTime: "12:00",
-            endCheckInTime: "00:00",
-          },
-        };
-        break;
-      }
-
-      case "implementing": {
-        const selectedAwarenesses = formData.value.selectedAwarenesses.map((entryId) => {
-          const awareness = entriesStore.memberEntries.find((entry) => entry.entryId === entryId);
-          return {
-            refId: awareness?.entryId || entryId,
-            observation: awareness?.observation || "Unknown Observation",
-          };
-        });
-
-        const needs = formData.value.selectedAwarenesses.flatMap((entryId) => {
-          const awareness = entriesStore.memberEntries.find((entry) => entry.entryId === entryId);
-          return (awareness?.needs || []).map((need) => ({
-            refId: awareness?.entryId || entryId,
-            need,
-          }));
-        });
-
-        entryData = {
-          ...entryData,
-          proposal: formData.value.proposal || "",
-          selectedAwarenesses,
-          needs,
-          intent: null,
-          observation: "",
-          observationPrivate: false,
-          practice: "",
-          mastered: "",
-          selectedImplementations: [],
-          selectedPractices: [],
-          checkInSettings: {
-            interval: 1,
-            startCheckInTime: "12:00",
-            endCheckInTime: "00:00",
-          },
-        };
-        break;
-      }
-
-      case "practicing": {
-        const selectedAwarenesses = formData.value.selectedProposals.flatMap((proposalId) => {
-          const proposal = entriesStore.memberEntries.find((entry) => entry.entryId === proposalId);
-          return proposal?.selectedAwarenesses?.map((awareness) => ({
-            refId: awareness.refId,
-            observation: awareness.observation,
-          })) || [];
-        });
-
-        const needs = formData.value.selectedProposals.flatMap((proposalId) => {
-          const proposal = entriesStore.memberEntries.find((entry) => entry.entryId === proposalId);
-          return (proposal?.needs || []).map((need) => ({
-            refId: proposalId,
-            need,
-          }));
-        });
-
-        const selectedImplementations = formData.value.selectedProposals.map((proposalId) => {
-          const proposal = entriesStore.memberEntries.find((entry) => entry.entryId === proposalId);
-          return {
-            refId: proposal?.entryId || proposalId,
-            proposal: proposal?.proposal || "Unknown Proposal",
-          };
-        });
-
-        entryData = {
-          ...entryData,
-          practice: formData.value.practice || "",
-          selectedAwarenesses,
-          needs,
-          selectedImplementations,
-          intent: "",
-          observation: "",
-          observationPrivate: false,
-          proposal: "",
-          mastered: "",
-          selectedPractices: [],
-          checkInSettings: {
-            interval: 1,
-            startCheckInTime: "12:00",
-            endCheckInTime: "00:00",
-          },
-        };
-        break;
-      }
-
-      case "mastery": {
-        const selectedAwarenesses = formData.value.selectedPractices.flatMap((practiceId) => {
-          const practice = entriesStore.memberEntries.find((entry) => entry.entryId === practiceId);
-          return practice?.selectedAwarenesses?.map((awareness) => ({
-            refId: awareness.refId,
-            observation: awareness.observation,
-          })) || [];
-        });
-
-        const needs = formData.value.selectedPractices.flatMap((practiceId) => {
-          const practice = entriesStore.memberEntries.find((entry) => entry.entryId === practiceId);
-          return (practice?.needs || []).map((need) => ({
-            refId: practiceId,
-            need,
-          }));
-        });
-
-        const selectedImplementations = formData.value.selectedPractices.flatMap((practiceId) => {
-          const practice = entriesStore.memberEntries.find((entry) => entry.entryId === practiceId);
-          return practice?.selectedImplementations?.map((implementation) => ({
-            refId: implementation.refId,
-            proposal: implementation.proposal,
-          })) || [];
-        });
-
-        const selectedPractices = formData.value.selectedPractices.map((practiceId) => {
-          const practice = entriesStore.memberEntries.find((entry) => entry.entryId === practiceId);
-          return {
-            refId: practice?.entryId || practiceId,
-            practice: practice?.practice || "Unknown Practice",
-          };
-        });
-
-        entryData = {
-          ...entryData,
-          mastered: formData.value.mastered || "",
-          selectedAwarenesses,
-          needs,
-          selectedImplementations,
-          selectedPractices,
-          intent: "",
-          observation: "",
-          observationPrivate: false,
-          proposal: "",
-          practice: "",
-          checkInSettings: {
-            interval: 1,
-            startCheckInTime: "12:00",
-            endCheckInTime: "00:00",
-          },
-        };
-        break;
-      }
-
-      default:
-        throw new Error("Invalid stage ID.");
-    }
-
-    // Ensure no field in `entryData` is undefined
-    Object.keys(entryData).forEach((key) => {
-      if (entryData[key] === undefined) {
-        entryData[key] = null; // Replace undefined with null
-      }
-    });
-
-    // Call the store action to add the new entry
-    await entriesStore.addNewEntry(entryData);
-
-    $q.notify({
-      type: "positive",
-      message: "Entry added successfully.",
-    });
-
-    router.push("/board");
-  } catch (error) {
-    console.error("Error submitting entry:", error.message);
-    $q.notify({
-      type: "negative",
-      message: error.message || "Failed to add entry.",
-    });
-  }
-};
-
-
-
-
 // Implementing - Filter Visible Awareness Observations
 const error = ref("");
 
 // Filtered and sorted awarenesses
 const filteredAwarenesses = computed(() =>
-  entriesStore.memberEntries
+  entriesStore.entries
     .filter(
-      (entry) => entry.stageId === "awareness"
+      (entry) => entry.stageId === "awareness" && entry.status === "visible"
     )
     .map((entry) => ({
       label: entry.observation,
@@ -285,7 +61,7 @@ const filteredAwarenesses = computed(() =>
 
 // Sort selected awarenesses to appear at the top
 const sortedAwarenesses = computed(() => {
-  const selected = formData.value.selectedAwarenesses;
+  const selected = formData.value.selectedAwareness;
   return [...filteredAwarenesses.value].sort((a, b) => {
     if (selected.includes(a.entryId) && !selected.includes(b.entryId)) {
       return -1;
@@ -299,7 +75,7 @@ const sortedAwarenesses = computed(() => {
 
 // Map selected awareness IDs to their labels
 const selectedAwarenessLabels = computed(() => {
-  return formData.value.selectedAwarenesses.map((id) => {
+  return formData.value.selectedAwareness.map((id) => {
     const awareness = filteredAwarenesses.value.find(
       (item) => item.entryId === id
     );
@@ -309,18 +85,21 @@ const selectedAwarenessLabels = computed(() => {
 
 // Toggle selection for awareness
 const toggleAwareness = (entryId) => {
-  const index = formData.value.selectedAwarenesses.indexOf(entryId); // Corrected property name
+  console.log("toggle awareness");
+  const index = formData.value.selectedAwareness.indexOf(entryId);
+  console.log("toggle awareness");
+  console.log(index);
   if (index === -1) {
     // Add awareness if not already selected
-    if (formData.value.selectedAwarenesses.length < 5) {
-      formData.value.selectedAwarenesses.push(entryId);
+    if (formData.value.selectedAwareness.length < 5) {
+      formData.value.selectedAwareness.push(entryId);
       error.value = ""; // Clear error
     } else {
       error.value = "You can select up to 5 awarenesses only.";
     }
   } else {
     // Remove awareness if already selected
-    formData.value.selectedAwarenesses.splice(index, 1);
+    formData.value.selectedAwareness.splice(index, 1);
     error.value = ""; // Clear error
   }
 };
@@ -337,7 +116,7 @@ const barStyle = {
 // implementing -- Filter proposals
 
 const filteredProposals = computed(() =>
-  entriesStore.memberEntries.filter(
+  entriesStore.entries.filter(
     (entry) => entry.stageId === "implementing" && entry.status === "visible"
   )
 );
@@ -402,7 +181,7 @@ const selectedProposalLabels = computed(() => {
 // Mastery - Filter practices
 
 const filteredPractices = computed(() =>
-  entriesStore.memberEntries.filter(
+  entriesStore.entries.filter(
     (entry) => entry.stageId === "practicing" && entry.status === "visible"
   )
 );
@@ -463,25 +242,35 @@ const togglePractice = (entryId) => {
   }
 };
 
-// Fetch entries for the current community
-onMounted(async () => {
-  try {
-    const currentCommunityId = authStore.profile?.currentCommunityId;
-    if (!currentCommunityId) {
-      throw new Error("Community not selected. Please select a community.");
-    }
+// Submit the new entry to the store
+const submitEntry = () => {
+  const newEntry = {
+    entryId: Date.now().toString(), // Example unique ID
+    userId: "current_user_id", // Replace with actual user ID from auth
+    stageId: entryType.value,
+    contentType: "text",
+    content: {
+      intent: formData.value.intent,
+      observation: formData.value.observation,
+      needs: formData.value.needs,
+      practice: formData.value.practice,
+      proposal: formData.value.proposal,
+      selectedAwareness: formData.value.selectedAwareness,
+    },
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
 
-    // Fetch member entries for the current community
-    await entriesStore.fetchMemberEntries(currentCommunityId);
-  } catch (err) {
-    console.error("Error loading entries:", err.message);
-    $q.notify({
-      type: "negative",
-      message: err.message || "Failed to load entries.",
-    });
-  }
-});
+  entriesStore.entries.push(newEntry);
 
+  $q.dialog({
+    title: "Thank You!",
+    message: "Your entry has been added to the community board.",
+    ok: "Close",
+  }).onOk(() => {
+    router.push("/board");
+  });
+};
 </script>
 
 <template>
@@ -503,14 +292,14 @@ onMounted(async () => {
         <div class="text-primary-80 text-body2 text-center q-mt-md">
           Select your entry stage
         </div>
-        <q-card v-for="type in availableStages" :key="type" class="bg-accent q-mx-md q-mb-lg q-mt-lg" flat
-          style="border-radius: 20px" clickable @click="
+        <q-card v-for="type in ['awareness', 'implementing', 'practicing', 'mastery']" :key="type"
+          class="bg-accent q-mx-md q-mb-lg q-mt-lg" flat style="border-radius: 20px" clickable @click="
             entryType = type;
           tab = 'form';
           ">
           <q-card-section horizontal class="items-center">
             <q-card-actions vertical class="justify-around q-px-md">
-              <StageBadge size="lg" :stage-id="type" :show-text="false" />
+              <StageIconMini size="lg" :stage-id="type" />
             </q-card-actions>
             <div class="text-h5 text-primary">
               {{
@@ -549,9 +338,6 @@ onMounted(async () => {
           <q-input v-model="formData.observation" class="q-py-sm"
             label="What is the original awareness or observation?" />
 
-          <q-toggle v-model="formData.observationPrivate" icon-color="primary" color="primary"
-            label="Only the leader sees this" />
-
           <q-input v-model="inputValue" label="Add underlying need/value/desire" class="q-py-sm q-mb-md" clearable
             @keyup.enter="addChip" />
 
@@ -579,7 +365,7 @@ onMounted(async () => {
                   'custom-chip',
                   'v-ripple',
                   'relative-position',
-                  formData.selectedAwarenesses.includes(awareness.entryId)
+                  formData.selectedAwareness.includes(awareness.entryId)
                     ? 'selected'
                     : 'unselected',
                 ]" @click="toggleAwareness(awareness.entryId)">

@@ -36,14 +36,8 @@ const habits = ref([
 
 <template>
   <q-page class="bg-lpage q-pa-sm">
-    <div
-      class="bg-accent"
-      style="border-radius:20px"
-    >
-      <q-toolbar
-        class="bg-accent text-primary"
-        style="border-radius:20px"
-      >
+    <div class="bg-accent" style="border-radius:20px">
+      <q-toolbar class="bg-accent text-primary" style="border-radius:20px">
         <q-avatar>
           <img src="../assets/jl-logo.svg">
         </q-avatar>
@@ -52,14 +46,7 @@ const habits = ref([
           Juntos
         </q-toolbar-title>
 
-        <q-btn
-          filled
-          round
-          color="primary"
-          text-color="accent"
-          dense
-          icon="o_group"
-        />
+        <q-btn filled round color="primary" text-color="accent" dense icon="o_group" />
       </q-toolbar>
       <div class="q-py-lg q-px-md nunito text-h5 text-primary">
         Share Awareness
@@ -69,24 +56,12 @@ const habits = ref([
           together</span>?
       </div>
       <div class="q-py-lg q-px-md">
-        <q-input
-          v-model="text"
-          rounded
-          outlined
-          bg-color="white"
-          color="accent"
-          label="I notice ..."
-        >
+        <q-input v-model="text" rounded outlined bg-color="white" color="accent" label="I notice ...">
           <template #prepend>
             <q-icon name="o_visibility" />
           </template>
         </q-input>
-        <q-toggle
-          v-model="leaderToggle"
-          icon-color="primary"
-          color="primary"
-          label="Only the leader sees this"
-        />
+        <q-toggle v-model="leaderToggle" icon-color="primary" color="primary" label="Only the leader sees this" />
       </div>
     </div>
     <div class="q-pa-sm">
@@ -95,13 +70,7 @@ const habits = ref([
           Practice Check In
         </div>
         <div class="col-3">
-          <q-btn
-            flat
-            no-caps
-            class="text-weight-bold"
-            label="Show all"
-            color="primary"
-          />
+          <q-btn flat no-caps class="text-weight-bold" label="Show all" color="primary" />
         </div>
       </div>
       <div class="text-body1 nunito q-pl-md text-weight-light">
@@ -109,32 +78,17 @@ const habits = ref([
       </div>
     </div>
     <div class="">
-      <div
-        v-for="h in habits"
-        :key="h.name"
-        class="bg-primary q-mb-sm q-pa-sm"
-        style="border-radius:10px"
-      >
+      <div v-for="h in habits" :key="h.name" class="bg-primary q-mb-sm q-pa-sm" style="border-radius:10px">
         <div class="row items-center">
           <div class="col-11">
             <div class="text-body1 lora text-weight-semibold text-lpage q-pa-sm q-pl-md">
               {{ h.name }}
             </div>
             <div class="q-gutter-xs q-pl-md">
-              <q-chip
-                dense
-                icon="o_message"
-                text-color="lpage-80"
-                color="primary"
-              >
+              <q-chip dense icon="o_message" text-color="lpage-80" color="primary">
                 {{ h.chat }}
               </q-chip>
-              <q-chip
-                dense
-                icon="o_check_circle"
-                text-color="lpage-80"
-                color="primary"
-              >
+              <q-chip dense icon="o_check_circle" text-color="lpage-80" color="primary">
                 {{ h.checkCount }} / 14
               </q-chip>
             </div>

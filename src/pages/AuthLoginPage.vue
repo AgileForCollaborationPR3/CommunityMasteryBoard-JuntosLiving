@@ -1,10 +1,10 @@
 <script setup>
-import { login } from '../utils/firebaseAuth';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthCommunityStore } from '../stores/auth-community-store';
 import { useFormErrors } from '../utils/formErrors';
 import { useQuasar } from 'quasar';
+import watermark from 'src/components/commons/LogoWatermark.vue';
 
 const $q = useQuasar();
 const router = useRouter();
@@ -30,11 +30,8 @@ const signin = async () => {
   try {
     loading.value = true;
 
-    // Attempt login
-    await login(formData.value);
-
-    // Update session and fetch user profile
-    await authStore.getSession();
+    // Attempt login with store's login method
+    await authStore.login(formData.value);
 
     // Redirect user based on their state
     if (authStore.profile?.currentCommunityId) {
@@ -43,10 +40,10 @@ const signin = async () => {
       router.push('/community'); // Redirect to community setup if no active community
     }
 
-    $q.notify({ type: 'positive', message: 'Login successful!' });
+    $q.notify({ type: 'positive', message: 'Login successful!', position: "top" });
   } catch (error) {
     console.error('Login error:', error.message);
-    $q.notify({ type: 'negative', message: error.message || 'An error occurred during login.' });
+    $q.notify({ type: 'negative', message: error.message || 'An error occurred during login.', position: "top" });
     handleServerError(error.message);
   } finally {
     loading.value = false;
@@ -55,29 +52,30 @@ const signin = async () => {
 </script>
 
 <template>
-  <div class="q-pa-lg flex flex-center min-h-90vh">
-    <q-card class="q-pa-md" style="max-width: 400px; width: 100%;">
-      <q-card-section>
+  <q-page class="q-pa-lg flex flex-center bg-lpage">
+    <q-card class="bg-accent" style="max-width: 400px; width: 100%; border-radius:40px;" flat>
+      <q-card-section class="q-pb-none">
+        <watermark :opacity="false" :tagline="true" />
+      </q-card-section>
+      <q-card-section class="q-pt-none">
         <div class="text-center">
-          <div class="text-h5">Login</div>
-          <div class="text-subtitle1">Access your account</div>
+          <div class="text-h5 text-primary lora text-weight-bold">Login</div>
+          <div class="text-body2 text-primary">Access your account</div>
         </div>
       </q-card-section>
 
-      <q-card-section class="q-mt-md">
-        <q-btn class="full-width q-mb-md" color="primary" flat label="Login with Google"
-          @click="() => $q.notify({ type: 'info', message: 'Google login not implemented yet.' })" />
-        <div class="text-center text-caption q-my-md">Or</div>
-
+      <q-card-section class="">
         <q-form @submit.prevent="signin">
-          <q-input v-model="formData.email" type="email" label="Email" placeholder="youremail@example.com" outlined
-            dense class="q-mb-md" required :error="realtimeErrors?.email?.length > 0" @input="debounceFormValidation" />
+          <q-input v-model="formData.email" type="email" label="Email" placeholder="youremail@example.com" flat
+            color="text-primary" label-color="primary" class="q-mb-md" required
+            :error="realtimeErrors?.email?.length > 0" @input="debounceFormValidation" />
           <ul class="text-red-500 text-caption" v-if="realtimeErrors?.email?.length">
             <li v-for="error in realtimeErrors.email" :key="error">{{ error }}</li>
           </ul>
 
-          <q-input v-model="formData.password" type="password" label="Password" placeholder="••••••••" outlined dense
-            class="q-mb-md" required :error="realtimeErrors?.password?.length > 0" @input="debounceFormValidation" />
+          <q-input v-model="formData.password" type="password" label="Password" placeholder="••••••••" flat
+            color="text-primary" label-color="primary" class="q-mb-md" required
+            :error="realtimeErrors?.password?.length > 0" @input="debounceFormValidation" />
           <ul class="text-red-500 text-caption" v-if="realtimeErrors?.password?.length">
             <li v-for="error in realtimeErrors.password" :key="error">{{ error }}</li>
           </ul>
@@ -95,5 +93,5 @@ const signin = async () => {
         </div>
       </q-card-section>
     </q-card>
-  </div>
+  </q-page>
 </template>

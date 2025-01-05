@@ -58,7 +58,10 @@ export default route(function (/* { store, ssrContext } */) {
     }
 
     // Redirect authenticated users away from login/register pages
-    if (authStore.user && ["/login", "/register"].includes(to.path)) {
+    if (
+      authStore.user &&
+      ["/login", "/register"].includes(to.path) // Only redirect for login/register
+    ) {
       return { path: "/" };
     }
 

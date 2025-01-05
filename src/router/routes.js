@@ -18,24 +18,42 @@ const routes = [
         component: () => import("src/pages/AddEntry.vue"),
       },
       {
-        path: "register",
-        name: "register",
-        component: () => import("src/pages/AuthRegisterPage.vue"),
-      },
-      {
-        path: "login",
-        name: "login",
-        component: () => import("src/pages/AuthLoginPage.vue"),
-      },
-      {
-        path: "community",
-        name: "community",
-        component: () => import("src/pages/AuthRegisterCommunityPage.vue"),
-      },
-      {
         path: "/dummy",
         name: "dummy",
         component: () => import("../pages/dummyEntries.vue"),
+      },
+    ],
+  },
+  {
+    path: "/community",
+    component: () => import("layouts/BlankLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "community",
+        component: () => import("src/pages/AuthRegisterCommunityPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/register",
+    component: () => import("layouts/BlankLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "register",
+        component: () => import("src/pages/AuthRegisterPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    component: () => import("layouts/BlankLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "login",
+        component: () => import("src/pages/AuthLoginPage.vue"),
       },
     ],
   },

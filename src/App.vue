@@ -1,13 +1,20 @@
 <script setup>
-import { onMounted } from 'vue';
-import { useAuthCommunityStore } from './stores/auth-community-store';
+import { onMounted } from "vue";
+import { useAuthCommunityStore } from "src/stores/auth-community-store";
+
+const authCommunityStore = useAuthCommunityStore();
 
 onMounted(async () => {
-  const authCommunityStore = useAuthCommunityStore();
-  await authCommunityStore.getSession(); // Check for an existing session
-  authCommunityStore.trackAuthChanges(); // Track Firebase authentication state
+  try {
+    // Initialize session and track authentication state
+    await authCommunityStore.getSession();
+    authCommunityStore.trackAuthChanges();
+  } catch (error) {
+    console.error("Error during app initialization:", error.message);
+  }
 });
 </script>
+
 <template>
   <router-view />
 </template>
