@@ -1,5 +1,14 @@
 import { defineStore } from "pinia";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  Timestamp,
+  getDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../boot/firebase";
 
 export const useCommentsStore = defineStore("comments", {
@@ -7,16 +16,12 @@ export const useCommentsStore = defineStore("comments", {
     comments: [], // All comments
   }),
   getters: {
-    // Get comments for a specific entry
-    getCommentsByEntryId: (state) => (entryId) => {
-      return state.comments.filter((comment) => comment.entryId === entryId);
-    },
-    // Get replies for a specific comment
-    getRepliesByCommentId: (state) => (commentId) => {
-      return state.comments.filter(
-        (comment) => comment.parentCommentId === commentId
-      );
-    },
+    getCommentsByEntryId: (state) => (entryId) =>
+      state.comments.filter(
+        (comment) => comment.entryId === entryId && !comment.parentCommentId
+      ),
+    getRepliesByCommentId: (state) => (commentId) =>
+      state.comments.filter((comment) => comment.parentCommentId === commentId),
   },
   actions: {
     async fetchCommentsByEntryId(entryId) {
@@ -26,23 +31,55 @@ export const useCommentsStore = defineStore("comments", {
           where("entryId", "==", entryId)
         );
         const querySnapshot = await getDocs(q);
-        this.comments = querySnapshot.docs.map((doc) => ({
-          commentId: doc.id,
-          ...doc.data(),
-        }));
+
+        this.comments = await Promise.all(
+          querySnapshot.docs.map(async (docSnapshot) => {
+            const comment = docSnapshot.data();
+
+            // Correctly fetch user data
+            const userRef = doc(db, "profiles", comment.userId); // Create a document reference
+            const userDoc = await getDoc(userRef);
+            const user = userDoc.exists()
+              ? userDoc.data()
+              : { fullName: "Unknown User", role: "Member" };
+
+            return {
+              commentId: docSnapshot.id,
+              ...comment,
+              fullName: user.fullName,
+              role: user.role,
+            };
+          })
+        );
+
         return this.getCommentsByEntryId(entryId);
       } catch (error) {
         console.error("Error fetching comments:", error.message);
-        throw new Error("Failed to fetch comments.");
+        throw new Error(error.message || "Failed to fetch comments.");
       }
     },
-    async fetchRepliesByCommentId(commentId) {
+
+    async addComment({
+      entryId,
+      userId,
+      username,
+      comment,
+      parentCommentId = null,
+    }) {
       try {
-        const replies = this.getRepliesByCommentId(commentId);
-        return replies;
+        const newComment = {
+          entryId,
+          userId,
+          username,
+          comment,
+          parentCommentId,
+          createdAt: Timestamp.now(),
+        };
+        const docRef = await addDoc(collection(db, "comments"), newComment);
+        this.comments.push({ commentId: docRef.id, ...newComment });
       } catch (error) {
-        console.error("Error fetching replies:", error.message);
-        throw new Error("Failed to fetch replies.");
+        console.error("Error adding comment:", error.message);
+        throw new Error("Failed to add comment.");
       }
     },
   },
