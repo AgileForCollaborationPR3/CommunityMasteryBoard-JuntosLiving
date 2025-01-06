@@ -99,7 +99,7 @@ onMounted(fetchEntry);
             <span class="text-caption text-primary-80">Created on {{ entry.createdAt }}</span>
           </q-card-section>
         </q-card>
-
+        <div class="text-h6 lora text-weight-bold text-primary q-pt-md q-pb-none">Comments</div>
         <CommentsSection :entry-id="entry.entryId" />
       </div>
     </div>

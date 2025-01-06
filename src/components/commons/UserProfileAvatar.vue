@@ -43,7 +43,7 @@ const avatarStyle = computed(() => ({
 <template>
   <div class="flex items-center">
     <!-- Avatar with initials or image -->
-    <div :style="avatarStyle" class="q-mr-sm">
+    <div :style="avatarStyle">
       <div v-if="avatarImageAvailable">
         <q-img :height="avatarSize" :width="avatarSize" :src="props.avatarSrc" :style="avatarStyle" />
       </div>
@@ -53,7 +53,7 @@ const avatarStyle = computed(() => ({
     </div>
 
     <!-- Optional username chip -->
-    <div v-if="!showInitialsOnly" class="chip__username text-caption text-primary"
+    <div v-if="!showInitialsOnly" class="chip__username text-caption text-primary q-ml-xs"
       :style="{ fontSize: `${avatarSize / 3}px` }">
       {{ props.fullName }}
     </div>
